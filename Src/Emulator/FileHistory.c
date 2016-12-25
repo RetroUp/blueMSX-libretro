@@ -442,8 +442,7 @@ int createSaveFileBaseName(char* fileBase,Properties* properties, int useExtende
                 properties->media.carts[i].type != ROM_SONYHBI55           &&
                 properties->media.carts[i].type != ROM_YAMAHASFG01         &&
                 properties->media.carts[i].type != ROM_YAMAHASFG05         &&
-                properties->media.carts[i].type != ROM_YAMAHANET           &&
-                properties->media.carts[i].type != ROM_SF7000IPL)
+                properties->media.carts[i].type != ROM_YAMAHANET) 
             {
                 done = 1;
             }

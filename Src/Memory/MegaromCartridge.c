@@ -74,8 +74,6 @@
 #include "romMapperMicrosol.h"
 #include "romMapperNationalFdc.h"
 #include "romMapperPhilipsFdc.h"
-#include "romMapperSvi707Fdc.h"
-#include "romMapperSvi738Fdc.h"
 #include "romMapperSonyHBI55.h"
 #include "romMapperMoonsound.h"
 #ifdef WIN32
@@ -84,18 +82,12 @@
 #include "romMapperSunriseIDE.h"
 #include "romMapperBeerIDE.h"
 #include "romMapperGIDE.h"
-#include "romMapperSg1000Castle.h"
 #include "romMapperMicrosolVmx80.h"
-#include "romMapperSvi727.h"
 #include "romMapperSonyHBIV1.h"
 #include "romMapperFmDas.h"
 #include "romMapperSfg05.h"
-#include "romMapperSf7000Ipl.h"
 #include "romMapperPlayBall.h"
 #include "romMapperObsonet.h"
-#include "romMapperSg1000.h"
-#include "romMapperSegaBasic.h"
-#include "romMapperCvMegaCart.h"
 #include "romMapperActivisionPcb.h"
 #include "romMapperDumas.h"
 #include "sramMapperMegaSCSI.h"
@@ -110,7 +102,6 @@
 #include "romMapperJoyrexPsg.h"
 #include "romMapperArc.h"
 #include "romMapperDooly.h"
-#include "romMapperSg1000RamExpander.h"
 #include "romMapperMuPack.h"
 
 #include <stdlib.h>
@@ -640,9 +631,6 @@ int cartridgeInsert(int cartNo, RomType romType, const char* cart, const char* c
             success &= romMapperNetCreate(romName, buf, size, slot, sslot, 2);
             break;
 
-        case ROM_SF7000IPL:
-            success &= romMapperSf7000IplCreate(romName, buf, size, slot, sslot, 0);
-            break;
 
         case ROM_DISKPATCH:
             success &= romMapperDiskCreate(romName, buf, size, slot, sslot, 2);
@@ -672,52 +660,21 @@ int cartridgeInsert(int cartNo, RomType romType, const char* cart, const char* c
             success &= romMapperPhilipsFdcCreate(romName, buf, size, slot, sslot, 2);
             break;
 
-        case ROM_SVI707FDC:
-            success &= romMapperSvi707FdcCreate(romName, buf, size, slot, sslot, 2);
-            break;
 
-        case ROM_SVI738FDC:
-            success &= romMapperSvi738FdcCreate(romName, buf, size, slot, sslot, 2);
-            break;
 
-        case ROM_SVI328CART:
-            success &= romMapperNormalCreate(romName, buf, size, 1, 0, 0);
-            break;
 
-        case ROM_COLECO:
-            success &= romMapperNormalCreate(romName, buf, size, 0, 0, 4);
-            break;
 
-        case ROM_CVMEGACART:
-            success &= romMapperCvMegaCartCreate(romName, buf, size, 0, 0, 4);
-            break;
             
         case ROM_ACTIVISIONPCB:
         case ROM_ACTIVISIONPCB_2K:
         case ROM_ACTIVISIONPCB_16K:
         case ROM_ACTIVISIONPCB_256K:
             success &= romMapperActivisionPcbCreate(romName, romType, buf, size, 0, 0, 4);
-            break;
 
-        case ROM_SG1000:
-        case ROM_SC3000:
-            success &= romMapperSg1000Create(romName, buf, size, slot, sslot, 0);
-            break;
 
-        case ROM_SG1000CASTLE:
-            success &= romMapperSg1000CastleCreate(romName, buf, size, slot, sslot, 0);
-            break;
 
-        case ROM_SG1000_RAMEXPANDER_A:
-            success &= romMapperSg1000RamExpanderCreate(romName, buf, size, slot, sslot, 0, ROM_SG1000_RAMEXPANDER_A);
-            break;
 
-        case ROM_SG1000_RAMEXPANDER_B:
-            success &= romMapperSg1000RamExpanderCreate(romName, buf, size, slot, sslot, 0, ROM_SG1000_RAMEXPANDER_B);
-            break;
 
-        case ROM_SEGABASIC:
-            success &= romMapperSegaBasicCreate(romName, buf, size, slot, sslot, 0);
             break;
 
         case ROM_KANJI:
@@ -770,10 +727,6 @@ int cartridgeInsert(int cartNo, RomType romType, const char* cart, const char* c
 
         case ROM_DOOLY:
             success &= romMapperDoolyCreate(romName, buf, size, slot, sslot, 2);
-            break;
-
-        case ROM_SVI727COL80:
-            success &= romMapperSvi727Col80Create(romName, buf, size, slot, sslot, 2);
             break;
 
         case ROM_MICROSOL80:

@@ -237,7 +237,7 @@ void retro_get_system_info(struct retro_system_info *info)
 #endif
    info->need_fullpath = true;
    info->block_extract = false;
-   info->valid_extensions = "rom|ri|mx1|mx2|col|sg|sc";
+   info->valid_extensions = "rom|mx1|mx2";
 }
 
 void retro_get_system_av_info(struct retro_system_av_info *info)

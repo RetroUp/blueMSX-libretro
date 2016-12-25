@@ -157,8 +157,6 @@ RomType romMapperTypeFromString(const char* name)
     if (0 == strcmpnocase(name, "diskpatch"))    return ROM_DISKPATCH;
     if (0 == strcmpnocase(name, "caspatch"))     return ROM_CASPATCH;
     if (0 == strcmpnocase(name, "wd2793"))       return ROM_PHILIPSFDC;
-    if (0 == strcmpnocase(name, "svi707fdc"))    return ROM_SVI707FDC;
-    if (0 == strcmpnocase(name, "svi738fdc"))    return ROM_SVI738FDC;
     if (0 == strcmpnocase(name, "microsol"))     return ROM_MICROSOL;
     if (0 == strcmpnocase(name, "rtype"))        return ROM_RTYPE;
     if (0 == strcmpnocase(name, "crossblaim"))   return ROM_CROSSBLAIM;
@@ -172,8 +170,6 @@ RomType romMapperTypeFromString(const char* name)
     if (0 == strcmpnocase(name, "kanji12"))      return ROM_KANJI12;    
     if (0 == strcmpnocase(name, "jisyo"))        return ROM_JISYO;    
     if (0 == strcmpnocase(name, "bunsetsu"))     return ROM_BUNSETU;
-    if (0 == strcmpnocase(name, "coleco"))       return ROM_COLECO;
-    if (0 == strcmpnocase(name, "svi328"))       return ROM_SVI328CART;
 
     return ROM_UNKNOWN;
 }    
@@ -272,15 +268,7 @@ RomType romMapperGuessRom(const void *buffer, int size, int guess, char* extende
 
     romType = romMapperRomFromFile(romData, size, extendedName);
 
-    if (romType == ROM_UNKNOWN &&
-        size < 0x10000 && romData[0] == 0xF3 && romData[1] == 0x31) {
-            romType = ROM_SVI328CART;
-    }
 
-    if (romType == ROM_UNKNOWN &&
-        size <= 0x8000 && romData[0] == 0x55 && romData[1] == 0xAA) {
-            romType = ROM_COLECO;
-    }
 
     if (romType == ROM_STANDARD &&
         (size < 0x10000 || (size == 0x10000 && romData[0x4000] == 'A' && romData[0x4001] == 'B'))) {

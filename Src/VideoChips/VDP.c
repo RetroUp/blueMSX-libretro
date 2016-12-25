@@ -1970,29 +1970,8 @@ static void getDebugInfo(VDP* vdp, DbgDevice* dbgDevice)
         }
         break;
 
-    case VDP_SVI:
-        ioPorts = dbgDeviceAddIoPorts(dbgDevice, vdpVersionName, 4);
-        dbgIoPortsAddPort(ioPorts, 0, 0x80, DBG_IO_WRITE, 0);
-        dbgIoPortsAddPort(ioPorts, 1, 0x81, DBG_IO_WRITE, 0);
-        dbgIoPortsAddPort(ioPorts, 2, 0x84, DBG_IO_READ,  peek(vdp, 0x84));
-        dbgIoPortsAddPort(ioPorts, 3, 0x85, DBG_IO_READ,  peekStatus(vdp, 0x85));
-        break;
 
-    case VDP_COLECO:
-        ioPorts = dbgDeviceAddIoPorts(dbgDevice, vdpVersionName, 32);
-        for (i = 0; i < 32; i += 2) {
-            dbgIoPortsAddPort(ioPorts, 0,     i + 0xa0, DBG_IO_READWRITE, peek(vdp, i + 0xa0));
-            dbgIoPortsAddPort(ioPorts, i + 1, i + 0xa1, DBG_IO_READWRITE, peekStatus(vdp, i + 0xa1));
-        }
-        break;
 
-    case VDP_SG1000:
-        ioPorts = dbgDeviceAddIoPorts(dbgDevice, vdpVersionName, 64);
-		for (i=0; i<64; i+=2) {
-			dbgIoPortsAddPort(ioPorts, 0, i+0x80, DBG_IO_READWRITE,  peek(vdp, i+0x80));
-			dbgIoPortsAddPort(ioPorts, 1, i+0x81, DBG_IO_READWRITE,  peekStatus(vdp, i+0x81));
-		}
-        break;
     }
 }
 
@@ -2166,24 +2145,8 @@ static void destroy(VDP* vdp)
         ioPortUnregister(0x9b);
         break;
 
-    case VDP_SVI:
-        ioPortUnregister(0x80);
-        ioPortUnregister(0x81);
-        ioPortUnregister(0x84);
-        ioPortUnregister(0x85);
-        break;
 
-    case VDP_COLECO:
-        for (i = 0xa0; i < 0xc0; i++) {
-            ioPortUnregister(i);
-        }
-        break;
 
-    case VDP_SG1000:
-        for (i = 0x80; i < 0xc0; i++) {
-            ioPortUnregister(i);
-        }
-        break;
     }
 
     boardTimerDestroy(vdp->timerDisplay);
@@ -2331,24 +2294,8 @@ void vdpCreate(VdpConnector connector, VdpVersion version, VdpSyncMode sync, int
         }
         break;
 
-    case VDP_SVI:
-        ioPortRegister(0x80, NULL,       write,      vdp); // vdp->vdpRegs vdp->vram Write
-        ioPortRegister(0x81, NULL,       writeLatch, vdp); // vdp->vdpRegs Address Latch
-        ioPortRegister(0x84, read,       NULL,       vdp); // vdp->vdpRegs vdp->vram Read
-        ioPortRegister(0x85, readStatus, NULL,       vdp); // vdp->vdpRegs Status Read
-        break;
 
-    case VDP_COLECO:
-        for (i = 0xa0; i < 0xc0; i += 2) {
-            ioPortRegister(i,     read,       write,      vdp);
-            ioPortRegister(i + 1, readStatus, writeLatch, vdp);
-        }
-        break;
         
-    case VDP_SG1000:
-        ioPortRegister(0xbe, read,       write,      vdp);
-        ioPortRegister(0xbf, readStatus, writeLatch, vdp);
-        break;
     }
 }
 

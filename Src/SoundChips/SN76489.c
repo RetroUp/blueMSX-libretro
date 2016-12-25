@@ -42,12 +42,7 @@
 #if 1
 
 #define FB_BBCMICRO  0x0005
-#define FB_SC3000    0x0006
-#define FB_SEGA      0x0009
-#define FB_COLECO    0x0003
 
-#define SRW_SEGA     16
-#define SRW_COLECO   15
 
 #define VOL_TRUNC    0
 #define VOL_FULL     0
@@ -228,9 +223,7 @@ SN76489* sn76489Create(Mixer* mixer)
 
 
     sn76489->voltTableIdx       = VOL_FULL;
-    sn76489->whiteNoiseFeedback = FB_COLECO;
-    sn76489->shiftRegisterWidth = SRW_COLECO;
-
+    
     sn76489Reset(sn76489);
 
     return sn76489;

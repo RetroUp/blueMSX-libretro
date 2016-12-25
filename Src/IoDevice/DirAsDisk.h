@@ -32,11 +32,6 @@
 
 typedef enum {
     DDT_MSX                = 0,
-    DDT_SVI_328_CPM_SSDD   = 1,
-    DDT_SVI_328_CPM_DSDD   = 2,
-    DDT_SVI_738_CPM_SSDD   = 3,
-    DDT_SVI_328_Basic_SSDD = 4,
-    DDT_SVI_328_Basic_DSDD = 5,
     DDT_MSX_CPM_SSDD       = 6,
     DDT_MSX_CPM_DSDD       = 7,
 } DirDiskType;

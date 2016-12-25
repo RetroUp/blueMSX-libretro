@@ -69,8 +69,6 @@
 #include "romMapperMicrosol.h"
 #include "romMapperNationalFdc.h"
 #include "romMapperPhilipsFdc.h"
-#include "romMapperSvi707Fdc.h"
-#include "romMapperSvi738Fdc.h"
 #include "romMapperGameMaster2.h"
 #include "romMapperASCII8sram.h"
 #include "romMapperASCII16sram.h"
@@ -109,27 +107,17 @@
 #include "romMapperMsxPrn.h"
 #include "romMapperMoonsound.h"
 #include "romMapperGameReader.h"
-#include "romMapperSvi328Prn.h"
-#include "romMapperSvi328Rs232.h"
-#include "romMapperSvi328Fdc.h"
-#include "romMapperSvi727.h"
 #include "ram1kBMirrored.h"
 #include "romMapperSunriseIDE.h"
 #include "romMapperBeerIDE.h"
 #include "romMapperGIDE.h"
-#include "romMapperSvi328RsIDE.h"
 #include "romMapperMicrosolVmx80.h"
 #include "romMapperNms8280VideoDa.h"
 #include "romMapperSonyHBIV1.h"
 #include "romMapperFmDas.h"
 #include "romMapperSfg05.h"
-#include "romMapperSf7000Ipl.h"
 #include "romMapperPlayBall.h"
 #include "romMapperObsonet.h"
-#include "romMapperSg1000Castle.h"
-#include "romMapperSg1000.h"
-#include "romMapperSg1000RamExpander.h"
-#include "romMapperSegaBasic.h"
 #include "romMapperDumas.h"
 #include "sramMapperMegaSCSI.h"
 #include "sramMapperEseSCC.h"
@@ -241,12 +229,6 @@ static int readMachine(Machine* machine, const char* machineName, const char* fi
     else if (0 == strcmp(buffer, "MSX-T9769B"))   machine->board.type = BOARD_MSX_T9769B;
     else if (0 == strcmp(buffer, "MSX-T9769C"))   machine->board.type = BOARD_MSX_T9769C;
     else if (0 == strcmp(buffer, "MSX-ForteII"))  machine->board.type = BOARD_MSX_FORTE_II;
-    else if (0 == strcmp(buffer, "SVI"))          machine->board.type = BOARD_SVI;
-    else if (0 == strcmp(buffer, "ColecoVision")) machine->board.type = BOARD_COLECO;
-    else if (0 == strcmp(buffer, "ColecoAdam"))   machine->board.type = BOARD_COLECOADAM;
-    else if (0 == strcmp(buffer, "SG-1000"))      machine->board.type = BOARD_SG1000;
-    else if (0 == strcmp(buffer, "SF-7000"))      machine->board.type = BOARD_SF7000;
-    else if (0 == strcmp(buffer, "SC-3000"))      machine->board.type = BOARD_SC3000;
     else                                          machine->board.type = BOARD_MSX;
 
     // Read video info
@@ -376,10 +358,7 @@ static int readMachine(Machine* machine, const char* machineName, const char* fi
                                 machine->slotInfo[i].romType == ROM_TC8566AF_TR ||
                                 machine->slotInfo[i].romType == ROM_MICROSOL    ||
                                 machine->slotInfo[i].romType == ROM_NATIONALFDC ||
-                                machine->slotInfo[i].romType == ROM_PHILIPSFDC  ||
-                                machine->slotInfo[i].romType == ROM_SVI328FDC   ||
-                                machine->slotInfo[i].romType == ROM_SVI707FDC   ||
-                                machine->slotInfo[i].romType == ROM_SVI738FDC;
+                                machine->slotInfo[i].romType == ROM_PHILIPSFDC;
 
         arg = extractToken(slotBuf, 5);
         strcpy(machine->slotInfo[i].name, arg ? arg : "");
@@ -505,12 +484,6 @@ void machineSave(Machine* machine)
     case BOARD_MSX_T9769B:   iniFileWriteString(configIni, "Board", "type", "MSX-T9769B"); break;
     case BOARD_MSX_T9769C:   iniFileWriteString(configIni, "Board", "type", "MSX-T9769C"); break;
     case BOARD_MSX_FORTE_II: iniFileWriteString(configIni, "Board", "type", "MSX-ForteII"); break;
-    case BOARD_SVI:          iniFileWriteString(configIni, "Board", "type", "SVI"); break;
-    case BOARD_COLECO:       iniFileWriteString(configIni, "Board", "type", "ColecoVision"); break;
-    case BOARD_COLECOADAM:   iniFileWriteString(configIni, "Board", "type", "ColecoAdam"); break;
-    case BOARD_SG1000:       iniFileWriteString(configIni, "Board", "type", "SG-1000"); break;
-    case BOARD_SF7000:       iniFileWriteString(configIni, "Board", "type", "SF-7000"); break;
-    case BOARD_SC3000:       iniFileWriteString(configIni, "Board", "type", "SC-3000"); break;
     }
 
     // Write video info
@@ -850,10 +823,7 @@ void machineUpdate(Machine* machine)
                                 machine->slotInfo[i].romType == ROM_TC8566AF_TR   ||
                                 machine->slotInfo[i].romType == ROM_MICROSOL      ||
                                 machine->slotInfo[i].romType == ROM_NATIONALFDC   ||
-                                machine->slotInfo[i].romType == ROM_PHILIPSFDC    ||
-                                machine->slotInfo[i].romType == ROM_SVI328FDC     ||
-                                machine->slotInfo[i].romType == ROM_SVI707FDC     ||
-                                machine->slotInfo[i].romType == ROM_SVI738FDC;
+                                machine->slotInfo[i].romType == ROM_PHILIPSFDC;
     }
 
     // Check VRAM size
@@ -1307,81 +1277,7 @@ int machineInitialize(Machine* machine, UInt8** mainRam, UInt32* mainRamSize, UI
             continue;
         }
 
-        // --------- ColecoVision Super Expansion Module specific mappers
-        if (machine->slotInfo[i].romType == ROM_OPCODEMEGA) {
-            success &= romMapperOpcodeMegaRamCreate(slot, subslot, startPage);
-            continue;
-        }
-
-        if (machine->slotInfo[i].romType == ROM_OPCODESAVE) {
-            success &= romMapperOpcodeSaveRamCreate(slot, subslot, startPage);
-            continue;
-        }
         
-        if (machine->slotInfo[i].romType == ROM_OPCODESLOT) {
-            success &= romMapperOpcodeSlotManagerCreate();
-            continue;
-        }
-
-        // --------- SVI specific mappers
-        if (machine->slotInfo[i].romType == ROM_SVI328FDC) {
-            success &= svi328FdcCreate();
-            continue;
-        }
-
-        if (machine->slotInfo[i].romType == ROM_SVI328PRN) {
-            success &= romMapperSvi328PrnCreate();
-            continue;
-        }
-
-        if (machine->slotInfo[i].romType == ROM_SVI328RS232) {
-            success &= romMapperSvi328Rs232Create(SVI328_RS232);
-            continue;
-        }
-
-        if (machine->slotInfo[i].romType == ROM_SVI328RSIDE) {
-            success &= romMapperSvi328RsIdeCreate(hdId++);
-            continue;
-        }
-        
-        // -------------------------------
-        
-        // MEGA-SCSI etc
-        switch (machine->slotInfo[i].romType) {
-        case SRAM_MEGASCSI:
-        case SRAM_ESERAM:
-        case SRAM_WAVESCSI:
-        case SRAM_ESESCC:
-            buf = NULL;
-            if (strlen(romName)) {
-                buf = romLoad(machine->slotInfo[i].name, machine->slotInfo[i].inZipName, &size);
-                if (buf == NULL) {
-                    success = 0;
-                    continue;
-                }
-            }
-            {
-                int mode = strlen(machine->slotInfo[i].inZipName) ? 0x80 : 0;
-                if (machine->slotInfo[i].romType == SRAM_MEGASCSI ||
-                    machine->slotInfo[i].romType == SRAM_WAVESCSI) {
-                    mode++;
-                }
-                if (machine->slotInfo[i].romType == SRAM_WAVESCSI ||
-                    machine->slotInfo[i].romType == SRAM_ESESCC) {
-                    success &= sramMapperEseSCCCreate
-                                (romName, buf, size, slot, subslot, startPage,
-                                machine->slotInfo[i].romType == SRAM_WAVESCSI ? hdId++ : 0, mode);
-                } else {
-                    success &= sramMapperMegaSCSICreate
-                                (romName, buf, size, slot, subslot, startPage,
-                                machine->slotInfo[i].romType == SRAM_MEGASCSI ? hdId++ : 0, mode);
-                }
-                if (buf) free(buf);
-            }
-            continue;
-        }
-        // -------------------------------
-
         buf = romLoad(machine->slotInfo[i].name, machine->slotInfo[i].inZipName, &size);
 
         if (buf == NULL) {
@@ -1609,9 +1505,6 @@ int machineInitialize(Machine* machine, UInt8** mainRam, UInt32* mainRamSize, UI
             success &= romMapperNetCreate(romName, buf, size, slot, subslot, startPage);
             break;
 
-        case ROM_SF7000IPL:
-            success &= romMapperSf7000IplCreate(romName, buf, size, slot, subslot, startPage);
-            break;
 
         case ROM_KOEI:
             success &= romMapperKoeiCreate(romName, buf, size, slot, subslot, startPage);
@@ -1685,26 +1578,6 @@ int machineInitialize(Machine* machine, UInt8** mainRam, UInt32* mainRamSize, UI
             success &= romMapperDramCreate(romName, buf, size, slot, subslot, startPage);
             break;
 
-        case ROM_SG1000:
-        case ROM_SC3000:
-            success &= romMapperSg1000Create(romName, buf, size, slot, subslot, startPage);
-            break;
-
-        case ROM_SG1000_RAMEXPANDER_A:
-            success &= romMapperSg1000RamExpanderCreate(romName, buf, size, slot, subslot, startPage, ROM_SG1000_RAMEXPANDER_A);
-            break;
-
-        case ROM_SG1000_RAMEXPANDER_B:
-            success &= romMapperSg1000RamExpanderCreate(romName, buf, size, slot, subslot, startPage, ROM_SG1000_RAMEXPANDER_B);
-            break;
-
-        case ROM_SG1000CASTLE:
-            success &= romMapperSg1000CastleCreate(romName, buf, size, slot, subslot, startPage);
-            break;
-
-        case ROM_SEGABASIC:
-            success &= romMapperSegaBasicCreate(romName, buf, size, slot, subslot, startPage);
-            break;
 
         case ROM_CASPATCH:
             success &= romMapperCasetteCreate(romName, buf, size, slot, subslot, startPage);
@@ -1735,14 +1608,6 @@ int machineInitialize(Machine* machine, UInt8** mainRam, UInt32* mainRamSize, UI
 
         case ROM_PHILIPSFDC:
             success &= romMapperPhilipsFdcCreate(romName, buf, size, slot, subslot, startPage);
-            break;
-
-        case ROM_SVI707FDC:
-            success &= romMapperSvi707FdcCreate(romName, buf, size, slot, subslot, startPage);
-            break;
-
-        case ROM_SVI738FDC:
-            success &= romMapperSvi738FdcCreate(romName, buf, size, slot, subslot, startPage);
             break;
 
         case ROM_KANJI:
@@ -1806,9 +1671,6 @@ int machineInitialize(Machine* machine, UInt8** mainRam, UInt32* mainRamSize, UI
             }
             break;
 
-        case ROM_SVI727COL80:
-            success &= romMapperSvi727Col80Create(romName, buf, size, slot, subslot, startPage);
-            break;
         }
         if( buf != NULL ) {
             free(buf);

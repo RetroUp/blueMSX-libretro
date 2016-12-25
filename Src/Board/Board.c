@@ -27,10 +27,6 @@
 */
 #include "Board.h"
 #include "MSX.h"
-#include "SVI.h"
-#include "SG1000.h"
-#include "Coleco.h"
-#include "Adam.h"
 #include "AudioMixer.h"
 #include "YM2413.h"
 #include "Y8950.h"
@@ -744,20 +740,6 @@ int boardRun(Machine* machine,
     case BOARD_MSX_FORTE_II:
         success = msxCreate(machine, deviceInfo->video.vdpSyncMode, &boardInfo);
         break;
-    case BOARD_SVI:
-        success = sviCreate(machine, deviceInfo->video.vdpSyncMode, &boardInfo);
-        break;
-    case BOARD_COLECO:
-        success = colecoCreate(machine, deviceInfo->video.vdpSyncMode, &boardInfo);
-        break;
-    case BOARD_COLECOADAM:
-        success = adamCreate(machine, deviceInfo->video.vdpSyncMode, &boardInfo);
-        break;
-    case BOARD_SG1000:
-    case BOARD_SC3000:
-    case BOARD_SF7000:
-        success = sg1000Create(machine, deviceInfo->video.vdpSyncMode, &boardInfo);
-        break;
     default:
         success = 0;
     }
@@ -865,7 +847,6 @@ void boardSetMachine(Machine* machine)
         case ROM_SUNRISEIDE:  hdType[hdIndex++] = HD_SUNRISEIDE; break;
         case ROM_BEERIDE:     hdType[hdIndex++] = HD_BEERIDE;    break;
         case ROM_GIDE:        hdType[hdIndex++] = HD_GIDE;       break;
-        case ROM_SVI328RSIDE: hdType[hdIndex++] = HD_RSIDE;      break;
         case ROM_NOWIND:      hdType[hdIndex++] = HD_NOWIND;     break;
         case SRAM_MEGASCSI:   hdType[hdIndex++] = HD_MEGASCSI;   break;
         case SRAM_WAVESCSI:   hdType[hdIndex++] = HD_WAVESCSI;   break;
@@ -1197,7 +1178,6 @@ void boardChangeCartridge(int cartNo, RomType romType, char* cart, char* cartZip
         if (currentRomType[cartNo] == ROM_SUNRISEIDE)   hdType[cartNo] = HD_SUNRISEIDE;
         if (currentRomType[cartNo] == ROM_BEERIDE)      hdType[cartNo] = HD_BEERIDE;
         if (currentRomType[cartNo] == ROM_GIDE)         hdType[cartNo] = HD_GIDE;
-        if (currentRomType[cartNo] == ROM_SVI328RSIDE)  hdType[cartNo] = HD_RSIDE;
         if (currentRomType[cartNo] == ROM_NOWIND)       hdType[cartNo] = HD_NOWIND;
         if (currentRomType[cartNo] == SRAM_MEGASCSI)    hdType[cartNo] = HD_MEGASCSI;
         if (currentRomType[cartNo] == SRAM_MEGASCSI128) hdType[cartNo] = HD_MEGASCSI;

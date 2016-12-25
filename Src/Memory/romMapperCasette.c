@@ -79,24 +79,8 @@ int romMapperCasetteCreate(const char* filename, UInt8* romData,
     rm->sslot = sslot;
     rm->startPage  = startPage;
 
-    if (boardGetType() == BOARD_SVI) {
         // Patch the SVI-328 BIOS and BASIC for cassette handling
-        for (i = 0; patchAddressSVI[i]; i++) {
-            UInt8* ptr = rm->romData + patchAddressSVI[i];
-            ptr[0] = 0xed;
-            ptr[1] = 0xfe;
-            ptr[2] = 0xc9;
-        }
-        rm->romData[0x2073]=0x01;   // Skip delay loop after save
-        rm->romData[0x20D0]=0x10;   // Write $55 only $10 times, instead
-        rm->romData[0x20D1]=0x00;   //   of $190
-        rm->romData[0x20E3]=0x00;   // Cancel instruction
-        rm->romData[0x20E4]=0x00;
-        rm->romData[0x20E5]=0x00;
-        rm->romData[0x20E6]=0xED;
-        rm->romData[0x20E7]=0xFE;
-    }
-    else {
+    
         // Patch the casette rom
         for (i = 0; patchAddress[i]; i++) {
             UInt8* ptr = rm->romData + patchAddress[i];
@@ -104,7 +88,6 @@ int romMapperCasetteCreate(const char* filename, UInt8* romData,
             ptr[1] = 0xfe;
             ptr[2] = 0xc9;
         }
-    }
 
     for (i = 0; i < pages; i++) {
         slotMapPage(slot, sslot, i + startPage, rm->romData + 0x2000 * i, 1, 0);

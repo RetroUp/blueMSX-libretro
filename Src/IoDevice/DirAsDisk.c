@@ -129,72 +129,6 @@ static const unsigned char msxboot[] = {
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 };
-static unsigned char svi738CpmBoot[512] = {
-    0xEB,0xFE,0x90,0x41,0x53,0x43,0x20,0x20, 
-    0x32,0x2E,0x32,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0xD0,0x21, 
-    0x2D,0xC0,0x11,0x00,0x80,0x01,0x24,0x00, 
-    0xED,0xB0,0xC3,0x00,0x80,0xF3,0x11,0x00, 
-    0x90,0x0E,0x1A,0xCD,0x7D,0xF3,0x11,0x01, 
-    0x00,0x26,0x10,0x2E,0x00,0x0E,0x2F,0xCD, 
-    0x7D,0xF3,0xF3,0x21,0x00,0x90,0x11,0x00, 
-    0xE2,0x01,0xD0,0x1D,0xED,0xB0,0xC3,0x00, 
-    0xE2,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00, 
-    0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00, 
-    0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00, 
-    0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00, 
-    0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00, 
-    0xFF,0x00,0xFF,0x00,0xFF,0xFF,0xFF,0x00, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF, 
-    0x00,0xFF,0x00,0xFF,0x00,0x00,0x00,0xFF, 
-    0xE1,0xC3,0x29,0xE1,0x3A,0x42,0xD7,0xC3, 
-    0x01,0xD7,0xEB,0x22,0xB1,0xE1,0xC3,0xDA, 
-    0xD9,0x2A,0xBF,0xE1,0xC3,0x29,0xE1,0x2A, 
-    0xAD,0xE1,0xC3,0x29,0xE1,0xCD,0x51,0xE0, 
-    0xCD,0x3B,0xDC,0xC3,0x01,0xDB,0x2A,0xBB, 
-    0xE1,0x22,0x45,0xD7,0xC9,0x3A,0xD6,0xE1, 
-    0xFE,0xFF,0xC2,0x3B,0xE1,0x3A,0x41,0xD7, 
-    0xC3,0x01,0xD7,0xE6,0x1F,0x32,0x41,0xD7, 
-    0xC9,0xCD,0x51,0xE0,0xC3,0x93,0xDF,0xCD, 
-    0x51,0xE0,0xC3,0x9C,0xDF,0xCD,0x51,0xE0, 
-    0xC3,0xD2,0xDF,0x2A,0x43,0xD7,0x7D,0x2F, 
-    0x5F,0x7C,0x2F,0x2A,0xAF,0xE1,0xA4,0x57, 
-    0x7D,0xA3,0x5F,0x2A,0xAD,0xE1,0xEB,0x22, 
-    0xAF,0xE1,0x7D,0xA3,0x6F,0x7C,0xA2,0x67, 
-    0x22,0xAD,0xE1,0xC9,0x3A,0xDE,0xE1,0xB7, 
-    0xCA,0x91,0xE1,0x2A,0x43,0xD7,0x36,0x00, 
-    0x3A,0xE0,0xE1,0xB7,0xCA,0x91,0xE1,0x77, 
-    0x3A,0xDF,0xE1,0x32,0xD6,0xE1,0xCD,0x45, 
-    0xE0,0x2A,0x0F,0xD7,0xF9,0x2A,0x45,0xD7, 
-    0x7D,0x44,0xC9,0xCD,0x51,0xE0,0x3E,0x02, 
-    0x32,0xD5,0xE1,0x0E,0x00,0xCD,0x07,0xDF, 
-    0xCC,0x03,0xDE,0xC9,0xE5,0x00,0x00,0x00, 
-    0x00,0x80,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, 
-};
 static unsigned char msx2cpm3boot[512] = {
     0xE9,0x00,0x00,0x52,0x56,0x53,0x20,0x64, 
     0x61,0x74,0x61,0x00,0x02,0x02,0x01,0x00, 
@@ -285,71 +219,6 @@ static int bytespersector,direlements,fatelements;
 static int availsectors;
 
 static int alBlockNo;
-
-static void load_dsk_svi(int diskType)
-{
-    int imageSize = 0;
-    int dirOff = 0;
-    byte fatData = 0;
-
-    switch (diskType) {
-    case 7:         // MSX2 CP/M 3 DSDD
-        imageSize = 720;
-        alBlockNo = 1;
-        break;
-    case 6:         // MSX2 CP/M 3 SSDD
-        imageSize = 360;
-        alBlockNo = 1;
-        break;
-    case 3:         // SVI-738 CP/M SSDD
-        imageSize = 360;
-        alBlockNo = 1;
-        break;
-    case 5:         // SVI-328 Disk Basic DSDD
-        dirOff = 0x2A000;
-        fatData = 0xFF;
-    case 2:         // SVI-328 CP/M DSDD
-        imageSize = 338;
-        alBlockNo = 1;
-        break;
-    case 4:         // SVI-328 Disk Basic SSDD 
-        dirOff = 0x14C00;
-        fatData = 0xFE;
-    case 1:         // SVI-328 CP/M SSDD
-        imageSize = 168;
-        alBlockNo = 2;
-        break;
-    }
-
-    dskimage = (byte *) calloc (1, imageSize * 1024);
-    memset(dskimage, 0xe5, imageSize * 1024);
-    dskimagesize = imageSize * 1024;
-
-    if (diskType == 3) {
-        memcpy(dskimage, svi738CpmBoot, 512);
-    }
-    if (diskType == 6 || diskType == 7) {
-        memcpy(dskimage, msx2cpm3boot, 512);
-        if (diskType == 7) {
-            dskimage[dirOff + 0x13] = 0xA0;
-        }
-    }
-
-    if (diskType == 4 || diskType == 5) {
-        memset(dskimage + dirOff, 0xFF, 17 * 256);
-        memset(dskimage + dirOff + 13 * 256, 0x00, 256);
-
-        memset(dskimage + dirOff + 14 * 256, 0xFF, 40);
-        memset(dskimage + dirOff + 14 * 256 + 40, fatData, 40);
-        memset(dskimage + dirOff + 14 * 256, 0xFE, 3);
-        dskimage[dirOff + 14 * 256 + 20] = 0xFE;
-        memset(dskimage + dirOff + 14 * 256 + 80, 0x20, 48);
-        memset(dskimage + dirOff + 14 * 256 + 128, 0x00, 128);
-
-        memcpy(dskimage + dirOff + 15 * 256, dskimage + dirOff + 14 * 256, 256);
-        memcpy(dskimage + dirOff + 16 * 256, dskimage + dirOff + 14 * 256, 256);
-    }
-}
 
 static void load_dsk_msx(void) {
     dskimagesize = 720*1024;
@@ -649,156 +518,6 @@ static char* my_strupr(char* s)
     return s;
 }
 
-static int add_single_file_svi(int diskType, char *name, const char *pathname)
-{
-    typedef struct
-    {
-        char name[6];
-        char ext[3];
-        byte attrib;
-        byte fatpointer;
-        byte reserved[5];
-    } DirectoryEntry;
-
-    FILE *fpImport;
-    char fullname[250];
-    char filename[80];
-    char extension[10];
-    char *pname;
-    char *pext;
-    char myname[250];
-    byte fileBuf[17 * 256];
-    int bytesRead;
-    int fileDone;
-    int dirOff;
-    int dirEntryNo = 0;
-    int dirFound = 0;
-    DirectoryEntry myDir;
-    int fatCounter = 0;
-    int fatFound = 0;
-    int nextTrack;
-    int sides;
-    int side = 0;
-    int track = 0;
-    int offset;
-
-    switch (diskType) {
-    case 5:
-        dirOff = 0x2A000;
-        sides = 2;
-        break;
-    case 4:
-        dirOff = 0x14C00;
-        sides = 1;
-        break;
-    }
-
-    strcpy(fullname, pathname);
-    strcat(fullname, "/");
-    strcat(fullname, name);
-
-    strcpy(myname, name);
-    memset(&filename, 0x20, sizeof(filename));
-    memset(&extension, 0x20, sizeof(extension));
-    pname = strtok(name, ".");
-    if (pname != NULL) {
-        memcpy(filename, pname, strlen(pname));
-        pext = strrchr(myname, '.');
-        if (pext != NULL) {
-            memcpy(extension, pext + 1, strlen(pext));
-        }
-    }
-    else {
-        memcpy(filename, myname, strlen(myname));
-    }
-
-    do {
-        if (dskimage[dirOff + 16 * dirEntryNo] == 0xff) {
-            dirFound = 1;
-        }
-        else {
-            dirEntryNo++;
-        }
-    }
-    while (dirEntryNo < 16 * 13 && !dirFound);
-
-    if (!dirFound) {
-        return 1;
-    }
-
-    do {
-        if (dskimage[dirOff + 14 * 256 + fatCounter] == 0xff) {
-            fatFound = 1;
-        }
-        else {
-            fatCounter++;
-        }
-    }
-    while (fatCounter < 80 && !fatFound);
-
-    if (!fatFound) {
-        return 1;
-    }
-
-    fpImport = fopen(fullname, "rb");
-    if (!fpImport) {
-        return 1;
-    }
-
-    memset(&myDir, 0xff, sizeof(myDir));
-    memcpy(&myDir.name, filename, 6);
-    memcpy(&myDir.ext, extension, 3);
-    myDir.fatpointer = fatCounter;
-    myDir.attrib = 0;
-
-    pext = my_strupr(extension);
-    if (0 == strncmp(extension, "BAS ", 3))
-        myDir.attrib = 0x80;
-    else if (0 == strncmp(extension, "BIN ", 3))
-        myDir.attrib = 0x01;
-    else if (0 == strncmp(extension, "DAT ", 3))
-        myDir.attrib = 0x40;
-    else if (0 == strncmp(extension, "SCR ", 3))
-        myDir.attrib = 0xA0;
-    else
-        myDir.attrib = 0;
-
-    do {
-        memset(&fileBuf, 0x00, sizeof(fileBuf));
-
-        bytesRead = fread(fileBuf, 1, sizeof(fileBuf), fpImport);
-        fileDone = (bytesRead != sizeof(fileBuf));
-
-        track = fatCounter;
-        if (track > 39) {
-            side = 1;
-            track = 80 - fatCounter;
-        }
-        offset = ((track * sides + side) * 17 + 1 - 1) * 256 - 2048;
-        memcpy(dskimage + offset, &fileBuf, bytesRead);
-
-        if (!fileDone) {
-            nextTrack = fatCounter;
-            nextTrack++;
-            if (nextTrack == 20) {
-                nextTrack++;
-            }
-            dskimage[dirOff + 14 * 256 + fatCounter] = nextTrack;
-            fatCounter = nextTrack;
-        }
-    }
-    while (!fileDone);
-
-    memcpy(dskimage + dirOff + dirEntryNo * 16, &myDir, sizeof(myDir));
-
-    dskimage[dirOff + 14 * 256 + fatCounter] = 0xC0 | (int)ceil(bytesRead / 256.00);
-
-    memcpy(dskimage + dirOff + 15 * 256, dskimage + dirOff + 14 * 256, 256);
-    memcpy(dskimage + dirOff + 16 * 256, dskimage + dirOff + 14 * 256, 256);
-
-    fclose(fpImport);
-    return 0;
-}
 
 static int add_single_file_cpm(int diskType, char *name, const char *pathname)
 {
@@ -842,24 +561,9 @@ static int add_single_file_cpm(int diskType, char *name, const char *pathname)
         sides = 1;
         break;
     case 6:     // MSX2 CP/M 3 SSDD
-        dirOffset = 0x2400;
+	default:    
+		dirOffset = 0x2400;
         dpbBLS = 2048;
-        sides = 0;
-        break;
-    case 3:     // SVI-738 CP/M SSDD
-        dirOffset = 0x3600;
-        dpbBLS = 2048;
-        sides = 0;
-        break;
-    case 2:     // SVI-328 CP/M DSDD
-        dirOffset = 0x5E00;
-        dpbBLS = 2048;
-        sides = 1;
-        break;
-    case 1:     // SVI-328 CP/M SSDD
-    default:
-        dirOffset = 0x2B00;
-        dpbBLS = 1024;
         sides = 0;
         break;
     }
@@ -965,9 +669,6 @@ void* dirLoadFile(DirDiskType diskType, const char* directory, int* size)
     if (diskType == 0) {
         load_dsk_msx();
     }
-    else {
-        load_dsk_svi(diskType);
-    }
 
     sprintf(filename, "%s/*", directory);
 
@@ -987,9 +688,6 @@ void* dirLoadFile(DirDiskType diskType, const char* directory, int* size)
             fileName++;
             if (diskType == 0) {
                 rv = add_single_file(fileName, directory);
-            }
-            else if (diskType == 4 || diskType == 5) {
-                rv = add_single_file_svi(diskType, fileName, directory);
             }
             else {
                 rv = add_single_file_cpm(diskType, fileName, directory);
@@ -1021,10 +719,7 @@ void* dirLoadFile(DirDiskType diskType, const char* directory, int* size)
     if (diskType == 0) {
         load_dsk_msx();
     }
-    else {
-        load_dsk_svi(diskType);
-    }
-
+	
     sprintf(filename, "%s" DIR_SEPARATOR "*.*", directory);
 
     hFile = FindFirstFile(filename,&fileData);
@@ -1033,9 +728,6 @@ void* dirLoadFile(DirDiskType diskType, const char* directory, int* size)
         if (fileData.dwFileAttributes != FILE_ATTRIBUTE_DIRECTORY) {
             if (diskType == 0) {
                 rv = add_single_file(fileName, directory);
-            }
-            else if (diskType == 4 || diskType == 5) {
-                rv = add_single_file_svi(diskType, fileName, directory);
             }
             else {
                 rv = add_single_file_cpm(diskType, fileName, directory);

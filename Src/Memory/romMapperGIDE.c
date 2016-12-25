@@ -79,7 +79,7 @@ static void destroy(RomMapperGIde* rm)
 {
     int portBase;
 
-    portBase = (boardGetType() == BOARD_SVI) ? 0x40:0x60;
+    portBase = 0x60;
 
     ioPortUnregister(portBase | 0x04);
     ioPortUnregister(portBase | 0x05);
@@ -299,7 +299,7 @@ int romMapperGIdeCreate(int hdId)
     rm->deviceHandle = deviceManagerRegister(ROM_GIDE, &callbacks, rm);
     rm->debugHandle = debugDeviceRegister(DBGTYPE_PORT, langDbgDevIdeGide(), &dbgCallbacks, rm);
 
-    portBase = (boardGetType() == BOARD_SVI) ? 0x40:0x60;
+    portBase = 0x60;
 
     ioPortRegister(portBase | 0x04, readIo, writeIo, rm);
     ioPortRegister(portBase | 0x05, readIo, writeIo, rm);

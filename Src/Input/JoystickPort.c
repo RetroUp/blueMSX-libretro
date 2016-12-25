@@ -70,31 +70,6 @@ void joystickPortUpdateBoardInfo()
         joystickConfig.keyboardEnabled = 1;
         break;
 
-    case BOARD_SG1000:
-    case BOARD_SVI:
-        for (i = 0; i < 2; i++) {
-            //joystickConfig.typeEnabled[i][JOYSTICK_PORT_NONE] = 1;
-            joystickConfig.typeEnabled[i][JOYSTICK_PORT_JOYSTICK] = 1;
-            joystickConfig.defaultType[i] = JOYSTICK_PORT_JOYSTICK;
-        }
-        //DINK: added line below
-        joystickConfig.defaultType[0] = JOYSTICK_PORT_JOYSTICK;
-        if (boardType==BOARD_SG1000) {  // enable port2 on SEGA SG-*
-            joystickConfig.defaultType[1] = JOYSTICK_PORT_JOYSTICK;
-        }
-        joystickConfig.keyboardEnabled = 1;
-        break;
-
-    case BOARD_COLECO:
-        for (i = 0; i < 2; i++) {
-            joystickConfig.typeEnabled[i][JOYSTICK_PORT_COLECOJOYSTICK] = 1;
-            joystickConfig.typeEnabled[i][JOYSTICK_PORT_SUPERACTION] = 1;
-            joystickConfig.typeEnabled[i][JOYSTICK_PORT_STEERINGWHEEL] = 1;
-            joystickConfig.defaultType[i] = JOYSTICK_PORT_COLECOJOYSTICK;
-        }
-        joystickConfig.keyboardEnabled = 0;
-        break;
-
     case BOARD_MSX_FORTE_II:
         joystickConfig.typeEnabled[0][JOYSTICK_PORT_JOYSTICK] = 1;
         joystickConfig.defaultType[0] = JOYSTICK_PORT_JOYSTICK;
@@ -134,10 +109,8 @@ void joystickPortSetType(int port, JoystickPortType type)
 
     if (inputType[0] == JOYSTICK_PORT_MOUSE || 
         inputType[0] == JOYSTICK_PORT_ARKANOID_PAD || 
-        inputType[0] == JOYSTICK_PORT_COLECOJOYSTICK || 
         inputType[1] == JOYSTICK_PORT_MOUSE || 
-        inputType[1] == JOYSTICK_PORT_ARKANOID_PAD || 
-        inputType[1] == JOYSTICK_PORT_COLECOJOYSTICK)
+        inputType[1] == JOYSTICK_PORT_ARKANOID_PAD)
     {
         mode = AM_ENABLE_MOUSE;
     }
@@ -189,7 +162,6 @@ char* joystickPortGetDescription(JoystickPortType type, int translate)
         case JOYSTICK_PORT_MOUSE:           return langEnumControlsJoyMouse();
         case JOYSTICK_PORT_TETRIS2DONGLE:   return langEnumControlsJoyTetrisDongle();
         case JOYSTICK_PORT_GUNSTICK:        return langEnumControlsJoyGunStick();
-        case JOYSTICK_PORT_COLECOJOYSTICK:  return langEnumControlsJoyColeco();
         case JOYSTICK_PORT_MAGICKEYDONGLE:  return langEnumControlsJoyMagicKeyDongle();
         case JOYSTICK_PORT_ASCIILASER:      return langEnumControlsJoyAsciiLaser();
         case JOYSTICK_PORT_ARKANOID_PAD:    return langEnumControlsJoyArkanoidPad();
@@ -207,7 +179,6 @@ char* joystickPortGetDescription(JoystickPortType type, int translate)
     case JOYSTICK_PORT_MOUSE:           return "mouse";
     case JOYSTICK_PORT_TETRIS2DONGLE:   return "tetris2 dongle";
     case JOYSTICK_PORT_GUNSTICK:        return "gunstick";
-    case JOYSTICK_PORT_COLECOJOYSTICK:  return "coleco joystick";
     case JOYSTICK_PORT_MAGICKEYDONGLE:  return "magic key dongle";
     case JOYSTICK_PORT_ASCIILASER:      return "ascii laser";
     case JOYSTICK_PORT_ARKANOID_PAD:    return "arkanoid pad";
@@ -230,7 +201,6 @@ JoystickPortType joystickPortNameToType(int port, char* name, int translate)
         if (0 == strcmp(name, langEnumControlsJoyMouse())) return JOYSTICK_PORT_MOUSE;
         if (0 == strcmp(name, langEnumControlsJoyTetrisDongle())) return JOYSTICK_PORT_TETRIS2DONGLE;
         if (0 == strcmp(name, langEnumControlsJoyGunStick())) return JOYSTICK_PORT_GUNSTICK;
-        if (0 == strcmp(name, langEnumControlsJoyColeco())) return JOYSTICK_PORT_COLECOJOYSTICK;
         if (0 == strcmp(name, langEnumControlsJoyMagicKeyDongle())) return JOYSTICK_PORT_MAGICKEYDONGLE;
         if (0 == strcmp(name, langEnumControlsJoyAsciiLaser())) return JOYSTICK_PORT_ASCIILASER;
         if (0 == strcmp(name, langEnumControlsJoyArkanoidPad())) return JOYSTICK_PORT_ARKANOID_PAD;
@@ -244,7 +214,6 @@ JoystickPortType joystickPortNameToType(int port, char* name, int translate)
     if (0 == strcmp(name, "mouse")) return JOYSTICK_PORT_MOUSE;
     if (0 == strcmp(name, "tetris2 dongle")) return JOYSTICK_PORT_TETRIS2DONGLE;
     if (0 == strcmp(name, "gunstick")) return JOYSTICK_PORT_GUNSTICK;
-    if (0 == strcmp(name, "coleco joystick")) return JOYSTICK_PORT_COLECOJOYSTICK;
     if (0 == strcmp(name, "magic key dongle")) return JOYSTICK_PORT_MAGICKEYDONGLE;
     if (0 == strcmp(name, "ascii laser")) return JOYSTICK_PORT_ASCIILASER;
     if (0 == strcmp(name, "arkanoid pad")) return JOYSTICK_PORT_ARKANOID_PAD;

@@ -57,11 +57,10 @@ static int   changed[MAXDRIVES];
 static int   diskType[MAXDRIVES];
 static int   maxSector[MAXDRIVES];
 static char* drivesErrors[MAXDRIVES];
-static const UInt8 svi328Cpm80track[] = "CP/M-80";
 static void diskHdUpdateInfo(int driveId);
 static void diskReadHdIdentifySector(int driveId, UInt8* buffer);
 
-enum { MSX_DISK, SVI328_DISK, IDEHD_DISK } diskTypes;
+enum { MSX_DISK, IDEHD_DISK } diskTypes;
 
 UInt8 diskEnabled(int driveId)
 {
@@ -117,13 +116,8 @@ int diskGetSectorSize(int driveId, int side, int track, int density)
     if (driveId >= MAXDRIVES)
         return 0;
 
-    if (diskType[driveId] == SVI328_DISK) {
-        secSize = (track==0 && side==0 && density==1) ? 128 : 256;
-    }
-    else {
         secSize = sectorSize[driveId];
-    }
-
+    
     return secSize;
 }
 
@@ -137,16 +131,8 @@ static int diskGetSectorOffset(int driveId, int sector, int side, int track, int
 
     secSize = diskGetSectorSize(driveId, side, track, density);
 
-    if (diskType[driveId] == SVI328_DISK) {
-        if (track==0 && side==0 && density==1)
-            offset = (sector-1)*128; 
-        else
-            offset = ((track*sides[driveId]+side)*17+sector-1)*256-2048;
-    }
-    else {
         offset =  sector - 1 + diskGetSectorsPerTrack(driveId) * (track * diskGetSides(driveId) + side);
         offset *= secSize;
-    }
     return offset;
 }
 
@@ -294,12 +280,6 @@ static void diskUpdateInfo(int driveId)
                 sides[driveId]           = 1;
             }
             break;
-        case 172032:  /* SVI-328 40 SS */
-            sides[driveId] = 1;
-            tracks[driveId] = 40;
-            sectorsPerTrack[driveId] = 17;
-            diskType[driveId] = SVI328_DISK;
-            return;
         case 184320:  /* BW 12 SSDD */
             if (isSectorSize256(buf)) {
                 sectorSize[driveId] = 256;
@@ -314,44 +294,7 @@ static void diskUpdateInfo(int driveId)
             tracks[driveId] = 40;
             sides[driveId] = 1;
             return;
-        case 346112:  /* SVI-328 40 DS/80 SS */
-            sides[driveId] = 1;
-            tracks[driveId] = 80;
-            sectorsPerTrack[driveId] = 17;
-            diskType[driveId] = SVI328_DISK;
-            rv = diskReadSector(driveId, buf, 15, 0, 40, 0, &secSize);
-            if (rv != DSKE_OK) {
-                return;
-            }
-            // Is it formatted for 80 track Disk BASIC?
-            if (buf[0] == 0xfe && buf[1] == 0xfe && buf[2] == 0xfe && buf[20] != 0xfe && buf[40] == 0xfe) {
-            	return;
-            }
-            rv = diskReadSector(driveId, buf, 1, 0, 1, 0, &secSize);
-            if (rv != DSKE_OK) {
-                return;
-            }
-            // Is it sysgend for 80 track CP/M?
-            if (memcmp(&buf[176], &svi328Cpm80track[0], strlen(svi328Cpm80track)) == 0) {
-                rv = diskReadSector(driveId, buf, 2, 0, 0, 1, &secSize);
-                if (rv != DSKE_OK) {
-                    return;
-                }
-                if (buf[115] == 0x50 || buf[116] == 0x50) {
-                    return;
-                }
-            }
-            sides[driveId] = 2;
-            tracks[driveId] = 40;
-            return;
-        case 348160:  /* SVI-728 DSDD (CP/M) */
-            if (isSectorSize256(buf)) {
-                sectorSize[driveId] = 256;
-                sectorsPerTrack[driveId] = 17;
-                tracks[driveId] = 40;
-                sides[driveId] = 2;
-            }
-            return;
+        
 	}
 
     if (buf[0] ==0xeb) {

@@ -147,22 +147,9 @@ void PatchZ80(void* ref, CpuRegs* cpu)
         case 0x00f3: stmotr(ref, cpu); break;
         }
         break;
-    case BOARD_SVI:
-        switch (cpu->PC.W - 2) {
         /* SVI-328 BIOS */
-        case 0x0069: tapion(ref, cpu); break; // CSRDON
-        case 0x006C: tapin(ref, cpu);  break; // CASIN
-        case 0x006F: tapiof(ref, cpu); break; // CTOFF
-        case 0x0072: tapoon(ref, cpu); break; // CWRTON
-        case 0x0075: tapout(ref, cpu); break; // CASOUT
-        case 0x0078: tapoof(ref, cpu); break; // CTWOFF
 
         /* SVI-328 BASIC */
-        case 0x20E6: casout(ref, cpu); break; // CASOUT
-        case 0x210A: tapion(ref, cpu); break; // CSRDON
-        case 0x21A9: tapin(ref, cpu); break;  // CASIN
-        }
-        break;
     }
 
     vdpCmdFlushAll();
